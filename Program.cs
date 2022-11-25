@@ -3,13 +3,14 @@
 namespace SudokuSolver
 {
     /// <summary>
-    /// Deze class geeft een interface tussen het programma en de gebruiker en start de oplosser
+    /// Deze class geeft een interface tussen het programma en de gebruiker, daarna wordt de oplosser gestart
     /// </summary>
     internal class Program
     {
         public static void Main()
         {
             Sudoku sudoku = new();
+            Console.WriteLine("Vul voor per rij alle getallen in, gebruik voor lege vakjes het getal 0");
             FillFieldWithUserInput(sudoku);
             Console.WriteLine("Ingevulde sudoku:");
             sudoku.PrintField(true);
@@ -23,7 +24,7 @@ namespace SudokuSolver
                 if (!sudoku.isDone())
                 {
                     Console.WriteLine($"Tussenresultaat na {steps} tussenstap(pen)");
-                    sudoku.PrintField(true);
+                    sudoku.PrintField(false);
                     steps += new BackTracker(sudoku).Start();
                     Console.WriteLine($"Eindresultaat met backtracking na {steps} tussenstap(pen)");
                     sudoku.PrintField(true);
@@ -37,7 +38,7 @@ namespace SudokuSolver
         }
 
         /// <summary>
-        /// 
+        /// Deze methode laat de gebruiker een nieuwe sudoku invullen
         /// </summary>
         /// <param name="sudoku">Het sudoku veld dat gevuld wordt</param>
         private static void FillFieldWithUserInput(Sudoku sudoku)
@@ -64,6 +65,12 @@ namespace SudokuSolver
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// De ingevulde regel wordt gecontroleerd op lengte en het de nummers
+        /// </summary>
+        /// <param name="row">de ingevulde regel</param>
+        /// <param name="size">de grootte van een regel van het sudoku veld</param>
+        /// <returns></returns>
         private static bool InputCheck(string row, int size)
         {
             if (row.Length != size)
@@ -81,6 +88,8 @@ namespace SudokuSolver
     }
 }
 /*
+Voorbeelden om de oplosser te testen:
+
 Zonder backtracker
 080500091
 015040723
@@ -103,18 +112,7 @@ Met backtracker
 000207100
 056000078
 
-deze is nog wel erg moeilijk voor de backtracker (349 stappen) -> nu 285
-001000200
-030000040
-500030006
-000107000
-040000080
-000902000
-300000008
-060050030
-002000700
-
-Voor de lovers
+Nog een met backtracker
 025000490
 400206005
 900040006
@@ -124,28 +122,4 @@ Voor de lovers
 001000300
 000501000
 800070009
-
-
-Kan wel jaren duren! oplossing vinden -> nu in enkele ms
-036000000
-054000000
-070000000
-000000000
-000000000
-000000000
-023000000
-089000000
-047000000
-
-
-vol
-123456789
-456789123
-789123456
-234567891
-567891234
-891234567
-345678912
-678912345
-912345678
 */
