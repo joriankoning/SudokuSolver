@@ -7,6 +7,9 @@ namespace SudokuSolver
     /// </summary>
     internal class Program
     {
+        /// <summary>
+        /// de Main methode zet een nieuw bord op, voert de oplosser uit en laat het resultaat zien in de console
+        /// </summary>
         public static void Main()
         {
             Sudoku sudoku = new();
@@ -24,7 +27,7 @@ namespace SudokuSolver
                 if (!sudoku.isDone())
                 {
                     Console.WriteLine($"Tussenresultaat na {steps} tussenstap(pen)");
-                    sudoku.PrintField(false);
+                    sudoku.PrintField(true);
                     steps += new BackTracker(sudoku).Start();
                     Console.WriteLine($"Eindresultaat met backtracking na {steps} tussenstap(pen)");
                     sudoku.PrintField(true);
